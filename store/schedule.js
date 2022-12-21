@@ -5,15 +5,24 @@ export const state = () => ({
   loading: false
 })
 
+export const mutations = {
+  updateSchedule (state, schedule) {
+    state.schedule = schedule
+  },
+  toggleLoading (state) {
+    state.loading = !state.loading
+  }
+}
+
 export const actions = {
-  async remoteFetchSchedule ({ state }) {
-    state.loading = true
+  async remoteFetchSchedule ({ commit }) {
+    commit('toggleLoading')
     await axios.get('https://data.nba.com/data/v2022/json/mobile_teams/nba/2022/teams/bucks_schedule.json')
       .then((r) => {
-        state.schedule = r.data
-        state.loading = false
+        commit('updateSchedule', r.data.data.gscd.g)
+        commit('toggleLoading')
       }).catch((e) => {
-        state.loading = false
+        commit('toggleLoading')
       })
   }
 }

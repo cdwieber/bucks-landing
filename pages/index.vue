@@ -47,6 +47,9 @@ export default {
   name: 'IndexPage',
   components: {
     Card
+  },
+  mounted () {
+    this.$store.dispatch('schedule/remoteFetchSchedule')
   }
 }
 </script>
