@@ -1,1 +1,30 @@
-@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/utilities/derived-variables";
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap');
+
+$brand-colors: (
+    primary: #00471c,
+    primary-light: #f0ebd2,
+    link: #007dc5
+);
+@each $var, $val in $brand-colors {
+    $colors: map-merge($colors, ($var: ($val, white)));
+}
+
+$body-background-color: #f0ebd2;
+
+$navbar-tab-active-color: #f0ebd2 !important;
+$navbar-background-color: $primary;
+$navbar-item-hover-background-color: $primary;
+$navbar-item-img-max-height: 4rem;
+$navbar-item-color: $primary-light !important;
+$navbar-dropdown-background-color: #00471c;
+$family-primary: 'Oswald';
+
+
+li .is-active > a {
+    background-color: #f0ebd2 !important;
+}
+
+@import "~bulma/bulma";
+@import "~buefy/src/scss/buefy";

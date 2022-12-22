@@ -1,11 +1,11 @@
 <template>
   <section id="latest-news">
     <div class="container">
-      <div class="is-size-1">
+      <div class="title">
         Latest News
       </div>
 
-      <b-carousel-list v-model="slide" :data="items" :items-to-show="3">
+      <b-carousel-list v-model="slide" :data="items" :items-to-show="3" class="is-shadowless">
         <template #item="list">
           <div class="card">
             <div class="card-image">
@@ -22,12 +22,14 @@
           </div>
         </template>
       </b-carousel-list>
+      <div class="has-text-right">
+        <a href="#" class="is-size-5">All Stories &rarr;</a>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
-// import axios from 'axios'
 export default {
   data: () => ({
     items: [],

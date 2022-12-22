@@ -1,27 +1,18 @@
 <template>
-  <section>
-    <div class="is-size-1 container">
+  <section id="upcoming-games" class="is-light container pt-6">
+    <div class="title">
       Upcoming Games
     </div>
-    <b-carousel-list v-model="slide" :data="upcomingGames" :items-to-show="5">
-      <template #item="list">
-        <div class="card">
-          <div class="card-content">
-            <p class="title">
-              {{ list.v.ta }} @ {{ list.h.ta }}
-            </p>
-          </div>
-          <footer class="card-footer">
-            <div class="card-footer-item">
-              <span class="is-size-7">{{ prettyDate(list.etm) }}</span>
-            </div>
-            <div class="card-footer-item">
-              <span class="is-size-7">{{ prettyTime(list.etm) }}</span>
-            </div>
-          </footer>
-        </div>
-      </template>
-    </b-carousel-list>
+
+    <div v-if="upcomingGames.length" id="game-display" class="level is-clipped is-mobile">
+      <div v-for="game in upcomingGames" :key="game.id" class="level-item">
+        <ScheduleCard :game="game" />
+      </div>
+    </div>
+
+    <div class="has-text-right">
+      <a href="#" class="is-size-5">Full Schedule &rarr;</a>
+    </div>
   </section>
 </template>
 
@@ -52,3 +43,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#game-display {
+  overflow-x: scroll !important;
+}
+</style>

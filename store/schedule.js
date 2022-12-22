@@ -18,7 +18,7 @@ export const mutations = {
 export const getters = {
   // Get the games that are upcoming or currently ongoing.
   upcomingGames (state) {
-    return state.schedule.filter(game => DateTime.fromISO(game.htm) >= DateTime.now())
+    return state.schedule.filter(game => DateTime.fromISO(game.htm) >= DateTime.now()).slice(0, 6)
   },
   // Get games that have already happened.
   pastGames (state) {

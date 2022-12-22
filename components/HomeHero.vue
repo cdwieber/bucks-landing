@@ -1,72 +1,68 @@
 <template>
-  <section class="hero is-primary is-medium">
-    <!-- Hero head: will stick at the top -->
+  <section id="landing-hero" class="hero is-primary is-medium">
     <div class="hero-head">
-      <nav class="navbar">
-        <div class="container">
-          <div class="navbar-brand">
-            <a class="navbar-item">
-              <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo">
-            </a>
-            <span class="navbar-burger" data-target="navbarMenuHeroA">
-              <span />
-              <span />
-              <span />
-            </span>
+      <b-navbar>
+        <template #brand>
+          <a class="navbar-item">
+            <figure class="image is-128x128">
+              <img src="/Milwaukee_Bucks_logo.svg" style="max-height: 100% !important" alt="Logo">
+            </figure>
+          </a>
+        </template>
+
+        <template #end>
+          <div v-for="item in menu.primary.items" :key="item.id">
+            <b-navbar-item v-if="item.children.length === 0" :href="item.url">
+              {{ item.title }}
+            </b-navbar-item>
+            <b-navbar-dropdown v-else hoverable right arrowless :label="item.title">
+              <b-navbar-item v-for="child in item.children" :key="child.id">
+                {{ child.title }}
+              </b-navbar-item>
+            </b-navbar-dropdown>
           </div>
-          <div id="navbarMenuHeroA" class="navbar-menu">
-            <div class="navbar-end">
-              <a class="navbar-item is-active">
-                Home
-              </a>
-              <a class="navbar-item">
-                Examples
-              </a>
-              <a class="navbar-item">
-                Documentation
-              </a>
-              <span class="navbar-item">
-                <a class="button is-primary is-inverted">
-                  <span class="icon">
-                    <i class="fab fa-github" />
-                  </span>
-                  <span>Download</span>
-                </a>
-              </span>
-            </div>
-          </div>
-        </div>
-      </nav>
+        </template>
+      </b-navbar>
     </div>
 
-    <!-- Hero content: will be in the middle -->
-    <div class="hero-body">
-      <div class="container has-text-centered">
-        <p class="title">
-          Title
-        </p>
-        <p class="subtitle">
-          Subtitle
-        </p>
-      </div>
-    </div>
+    <div class="hero-body" />
 
-    <!-- Hero footer: will stick at the bottom -->
     <div class="hero-foot">
-      <nav class="tabs">
+      <nav class="tabs is-boxed is-full-width">
         <div class="container">
           <ul>
             <li class="is-active">
-              <a>Overview</a>
+              <a href="/">Home</a>
             </li>
-            <li><a>Modifiers</a></li>
-            <li><a>Grid</a></li>
-            <li><a>Elements</a></li>
-            <li><a>Components</a></li>
-            <li><a>Layout</a></li>
+            <li v-for="item in menu.secondary.items" :key="item.id">
+              <a :href="item.url" class="has-background-dark">{{ item.title }}</a>
+            </li>
           </ul>
         </div>
       </nav>
     </div>
   </section>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    menu: []
+  }),
+  async fetch () {
+    await this.$axios.get('https://content-api-dev.nba.com/public/1/teams/1610612749/site/layout/nav')
+      .then((r) => {
+        this.menu = r.data.results
+      })
+  }
+}
+</script>
+
+<style scoped>
+#landing-hero {
+    background-image: url('/giannis.webp');
+    background-image: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+</style>
