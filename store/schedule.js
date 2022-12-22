@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { DateTime } from 'luxon'
 
 export const state = () => ({
   schedule: [],
@@ -11,6 +12,17 @@ export const mutations = {
   },
   toggleLoading (state) {
     state.loading = !state.loading
+  }
+}
+
+export const getters = {
+  // Get the games that are upcoming or currently ongoing.
+  upcomingGames (state) {
+    return state.schedule.filter(game => DateTime.fromISO(game.htm) >= DateTime.now())
+  },
+  // Get games that have already happened.
+  pastGames (state) {
+    return state.schedule.filter(game => DateTime.fromISO(game.htm) < DateTime.now())
   }
 }
 
